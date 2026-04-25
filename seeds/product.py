@@ -1,26 +1,27 @@
 import os
 import random
 from dotenv import load_dotenv
+from psycopg2.extras import execute_values
 from faker import Faker
 
-def seed_product(curr,n):
+def seed_product(curr):
     load_dotenv()
     fake = Faker()
     product_type_size = int(os.getenv("PRODUCT_TYPES_COUNT", 0))
     unit_size = int(os.getenv("UNIT_TYPES_COUNT", 0))
 
-    for i in range(n):
-        data = (
-            fake.unique.word().capitalize(),  # Name
-            fake.image_url(),                 # Url
-            random.randint(1, product_type_size),  # TypeId
-            random.randint(1, unit_size),          # BaseUnitId
-        )
-        curr.execute("""
-            INSERT INTO PRODUCT (Name, Url, TypeId, BaseUnitId)
-            VALUES (%s, %s, %s, %s)
+#        data = (
+#            fake.unique.word().capitalize(),  # Name
+#            fake.image_url(),                 # Url
+#            random.randint(1, product_type_size),  # TypeId
+#            random.randint(1, unit_size),          # BaseUnitId
+#        )
+    
+    execute_values(curr,"""
+            INSERT INTO PRODUCT (Name, TypeId, BaseUnitId)
+            VALUES %s
         """, data)
-        print(f"\rSeeding products: {((i+1)/n*100):.1f}%", end="", flush=True)
+    print(f"Generated {len(data)} products")
     print()
 
 
