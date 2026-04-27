@@ -5,7 +5,7 @@ def seed_order_status(curr,data=None):
     Values (%s)
     ON CONFLICT (Status) DO NOTHING
     """,
-    [("PENDING",), ("FINISHED",), ("CANCELLED",)]
+    [("Pending",), ("In Progress",), ("Ready",), ("Served",), ("Completed",), ("Packaging",), ("Cleaning",),]
         )
 
 

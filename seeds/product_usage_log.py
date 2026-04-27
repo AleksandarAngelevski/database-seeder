@@ -5,7 +5,7 @@ from faker import Faker
 from psycopg2.extras import execute_values
 from datetime import timedelta
 
-def seed_product_usage_log(curr, weeks=312, monthly_months=71, order_sample_limit=250000):
+def seed_product_usage_log(curr, weeks=312, monthly_months=71, order_sample_limit=2500000):
     load_dotenv()
 
     # Weekly restocks

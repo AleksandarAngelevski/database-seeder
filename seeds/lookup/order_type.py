@@ -4,5 +4,5 @@ def seed_order_type(curr, data=None):
         INSERT INTO ORDERTYPE(Type)
         VALUES (%s)
         ON CONFLICT (Type) DO NOTHING
-        """,[("Takeaway",), ("Dine-in",),("Delivery",), ("Bar",)]
+        """,[("Dine-in",), ("Takeaway",),("Delivery",), ("Bar",)]
             )

@@ -1,3 +1,4 @@
+from seeds.invoice import seed_invoice
 from seeds.lookup.change_type import *
 from seeds.lookup.employee_type import *
 from seeds.lookup.menu_member_type import *
@@ -22,10 +23,13 @@ from seeds.menu_item import *
 from seeds.menu_member import *
 from seeds.order_item import *
 from seeds.discount import *
+from seeds.invoice import *
 from datetime import datetime
 import os
 from dotenv import load_dotenv 
 import psycopg2
+from progress_api import *
+
 
 start = datetime.now()
 print(f"Start at: {start.strftime('%H:%M:%S')}")
@@ -48,54 +52,49 @@ TABLE_COUNT=int(os.getenv("RESTAURANT_TABLE_COUNT",0))
 EMPLOYEE_COUNT=int(os.getenv("EMPLOYEE_COUNT",0))
 PRODUCT_COUNT=int(os.getenv("PRODUCT_COUNT",0))
 ORDERS_COUNT=int(os.getenv("ORDERS_COUNT",0))
+
+
+def run_step(name, fn, *args, needs_con=False):
+    if is_done(name):
+        print(f"SKIPPING {name} (already done)")
+        return
+    print(f"CREATING {name}")
+    if needs_con:
+        fn(curr, conn,*args)
+    else:
+        fn(curr, *args)
+    conn.commit()
+    save_progress(name, True)
+
 def run_seed():
-    print("CREATING MENU TYPES")
-    seed_menu_type(curr)
-    print("CREATING CHANGE TYPES")
-    seed_change_type(curr)
-    print("CREATING MENU MEMBER TYPES") 
-    seed_menu_member_type(curr)
-    print("CREATING ORDER STATUS") 
-    seed_order_status(curr)
-    print("CREATING ORDER TYPE") 
-    seed_order_type(curr)
-    print("CREATING PRODCUT TYPE")
-    seed_product_type(curr)
-    print("CREATING TABLE TYPE") 
-    seed_table_type(curr) 
-    print("CREATING UNIT TYPE")
-    seed_unit_type(curr)
-    print("CREATING UNIT")
-    seed_unit(curr)
-    print("CREATING RESTAURANT TABLE") 
-    seed_table(curr,TABLE_COUNT)
-    print("CREATING EMPLOYEE TYPES")
-    seed_employee_type(curr)
-    print("CREATING EMPLOYEE")
-    seed_employee(curr,EMPLOYEE_COUNT)
-    print("CREATING EMPLOYEE ROLES")
-    seed_employee_role(curr)
-    print("CREATING PRODUCTS")
-    seed_product(curr)
-    print("CREATING ORDERS")
-    seed_order(curr,ORDERS_COUNT)
-    seed_menu(curr)
-    print("CREATING MENU ITEMS")
-    seed_menu_item(curr)
-    print("CREATING MENU MEMBERS")
-    seed_menu_member(curr)
-    print("CREATING ORDER ITEMS")
-    seed_order_item(curr)
-    print("CREATING DISCOUNTS")
-    seed_discount(curr)
-    print("CREATING RECPIES")
-    seed_consists_of(curr)
-    print("CREATING STORED_PRODUCTS")
-    seed_stored_product(curr)
-    print("CREATING RESERVATIONS")
-    seed_reservation(curr)
-    print("CREATING PRODUCT_USAGE_LOGS")
-    seed_product_usage_log(curr)
+    run_step("MENU TYPES",        seed_menu_type)
+    run_step("CHANGE TYPES",      seed_change_type)
+    run_step("MENU MEMBER TYPES", seed_menu_member_type)
+    run_step("ORDER STATUS",      seed_order_status)
+    run_step("ORDER TYPE",        seed_order_type)
+    run_step("PRODUCT TYPE",      seed_product_type)
+    run_step("TABLE TYPE",        seed_table_type)
+    run_step("UNIT TYPE",         seed_unit_type)
+    run_step("UNIT",              seed_unit)
+    run_step("RESTAURANT TABLE",  seed_table,          TABLE_COUNT)
+    run_step("EMPLOYEE TYPES",    seed_employee_type)
+    run_step("EMPLOYEE",          seed_employee,       EMPLOYEE_COUNT)
+    run_step("EMPLOYEE ROLES",    seed_employee_role)
+    run_step("PRODUCTS",          seed_product)
+    run_step("ORDERS",            seed_order,          ORDERS_COUNT)
+    run_step("MENU",              seed_menu)
+    run_step("MENU ITEMS",        seed_menu_item)
+    run_step("MENU MEMBERS",      seed_menu_member)
+    run_step("ORDER ITEMS",       seed_order_item, needs_con=True)
+    run_step("DISCOUNTS",         seed_discount)
+    run_step("RECIPES",           seed_consists_of)
+    run_step("STORED PRODUCTS",   seed_stored_product)
+    run_step("RESERVATIONS",      seed_reservation)
+    run_step("INVOICE", seed_invoice)
+    run_step("INVOICE ITEM", seed_invoice_item)
+    run_step("PRODUCT USAGE LOGS",seed_product_usage_log)
+
+
 
 run_seed()
 conn.commit()

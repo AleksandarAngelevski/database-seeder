@@ -1,0 +1,21 @@
+{
+  "MENU TYPES": true,
+  "CHANGE TYPES": true,
+  "MENU MEMBER TYPES": true,
+  "ORDER STATUS": true,
+  "ORDER TYPE": true,
+  "PRODUCT TYPE": true,
+  "TABLE TYPE": true,
+  "UNIT TYPE": true,
+  "UNIT": true,
+  "RESTAURANT TABLE": true,
+  "EMPLOYEE TYPES": true,
+  "EMPLOYEE": true,
+  "EMPLOYEE ROLES": true,
+  "PRODUCTS": true,
+  "ORDERS": true,
+  "MENU": true,
+  "MENU ITEMS": true,
+  "MENU MEMBERS": true,
+  "order_item_batch": 1117278
+}
