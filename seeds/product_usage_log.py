@@ -44,7 +44,7 @@ def seed_product_usage_log(curr, weeks=312, monthly_months=71, order_sample_limi
             ORDER BY random()
             LIMIT 3
         ) p
-        WHERE o.Id %% 15 = 0
+        WHERE o.Id %% 10 = 0
         LIMIT %s
     """, (order_sample_limit,))
     curr.execute("SELECT COUNT(*) FROM ProductUsageLog")
