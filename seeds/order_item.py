@@ -2,11 +2,6 @@ import os
 import random
 from dotenv import load_dotenv
 from psycopg2.extras import execute_values
-
-import os
-import random
-from dotenv import load_dotenv
-from psycopg2.extras import execute_values
 from progress_api import get_progress, save_progress
 
 def seed_order_item(curr, conn):

@@ -26,3 +26,4 @@ def get_progress(step, default=0):
 
 def is_done(step):
     return load_progress().get(step) == True
+

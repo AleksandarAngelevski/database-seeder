@@ -17,5 +17,14 @@
   "MENU": true,
   "MENU ITEMS": true,
   "MENU MEMBERS": true,
-  "order_item_batch": 1117278
+  "order_item_batch": 2000000,
+  "ORDER ITEMS": true,
+  "DISCOUNTS": true,
+  "RECIPES": true,
+  "STORED PRODUCTS": true,
+  "reservation_batch": 1000000,
+  "RESERVATIONS": true,
+  "INVOICE": true,
+  "INVOICE ITEM": true,
+  "PRODUCT USAGE LOGS": true
 }

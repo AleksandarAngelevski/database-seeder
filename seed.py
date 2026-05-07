@@ -89,7 +89,7 @@ def run_seed():
     run_step("DISCOUNTS",         seed_discount)
     run_step("RECIPES",           seed_consists_of)
     run_step("STORED PRODUCTS",   seed_stored_product)
-    run_step("RESERVATIONS",      seed_reservation)
+    run_step("RESERVATIONS",      seed_reservation, needs_con=True)
     run_step("INVOICE", seed_invoice)
     run_step("INVOICE ITEM", seed_invoice_item)
     run_step("PRODUCT USAGE LOGS",seed_product_usage_log)
