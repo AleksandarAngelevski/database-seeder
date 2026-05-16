@@ -1,6 +1,6 @@
 from faker import Faker
 import random
-fake = Faker('ar_SA') 
+fake = Faker() 
 def generate_employee():
     employment_date = fake.date_between(start_date='-5y', end_date='today')
     
